@@ -27,7 +27,7 @@ class Conta:
     def __init__(self, numero, cliente):
         self._saldo = 0
         self._numero = numero
-        self._agencia = "0001"
+        self._agencia = "9988"
         self._cliente = cliente
         self._historico = Historico()
 
@@ -60,22 +60,22 @@ class Conta:
         excedeu_saldo = valor > saldo
 
         if excedeu_saldo:
-            print("\n@@@ Operação falhou! Você não tem saldo suficiente. @@@")
+            print("\n@@@ A operação falhou! Saldo suficiente. @@@")
 
         elif valor > 0:
             self._saldo -= valor
-            print("\n=== Saque realizado com sucesso! ===")
+            print("\n--- Saque realizado com sucesso! ---")
             return True
 
         else:
-            print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+            print("\n@@@ A operação falhou! O valor informado é inválido. @@@")
 
         return False
 
     def depositar(self, valor):
         if valor > 0:
             self._saldo += valor
-            print("\n=== Depósito realizado com sucesso! ===")
+            print("\n--- Depósito realizado com sucesso! ---")
         else:
             print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
             return False
@@ -84,7 +84,7 @@ class Conta:
 
 
 class ContaCorrente(Conta):
-    def __init__(self, numero, cliente, limite=500, limite_saques=3):
+    def __init__(self, numero, cliente, limite=700, limite_saques=4):
         super().__init__(numero, cliente)
         self._limite = limite
         self._limite_saques = limite_saques
@@ -109,11 +109,11 @@ class ContaCorrente(Conta):
         return False
 
     def __str__(self):
-        return f"""\
+        return f'''\
             Agência:\t{self.agencia}
             C/C:\t\t{self.numero}
             Titular:\t{self.cliente.nome}
-        """
+        '''
 
 
 class Historico:
@@ -176,16 +176,22 @@ class Deposito(Transacao):
 
 
 def menu():
-    menu = """\n
-    ================ MENU ================
-    [d]\tDepositar
-    [s]\tSacar
-    [e]\tExtrato
-    [nc]\tNova conta
-    [lc]\tListar contas
-    [nu]\tNovo usuário
-    [q]\tSair
-    => """
+    menu = '''\n
+    ++++++++++++++ MENU +++++++++++++
+    [d]\tDEPOSITAR
+    [s]\tSACAR
+    [e]\tEXTRATO
+    [nc]\tNOVA CONTA
+    [lc]\tLISTAR CONTAS
+    [nu]\tNOVO USUÁRIO
+    [q]\tSAIR
+     
+    ==> 
+    
+    +++++++++++++ OBRIGADO POR USAR NOSSOS SERVIÇOS ++++++++++++++
+    ---- DúVIDAS ACESSE NOSSOS CONTATOS ----
+    --- EMAIL= BANK@EMAIL, TELEFONE: (00)99990-9999 ---
+    '''
     return input(textwrap.dedent(menu))
 
 
@@ -251,7 +257,7 @@ def exibir_extrato(clientes):
     if not conta:
         return
 
-    print("\n================ EXTRATO ================")
+    print("\n++++++++++++++++ EXTRATO ++++++++++++++++")
     transacoes = conta.historico.transacoes
 
     extrato = ""
@@ -263,7 +269,7 @@ def exibir_extrato(clientes):
 
     print(extrato)
     print(f"\nSaldo:\n\tR$ {conta.saldo:.2f}")
-    print("==========================================")
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
 def criar_cliente(clientes):
@@ -282,10 +288,10 @@ def criar_cliente(clientes):
 
     clientes.append(cliente)
 
-    print("\n=== Cliente criado com sucesso! ===")
+    print("\n+++ Cliente criado com sucesso! +++")
 
 
-def criar_conta(numero_conta, clientes, contas):
+def criar_conta(numero_conta, clientes, contas, limite_saques=4, deposito=valor):
     cpf = input("Informe o CPF do cliente: ")
     cliente = filtrar_cliente(cpf, clientes)
 
@@ -293,11 +299,14 @@ def criar_conta(numero_conta, clientes, contas):
         print("\n@@@ Cliente não encontrado, fluxo de criação de conta encerrado! @@@")
         return
 
-    conta = ContaCorrente.nova_conta(cliente=cliente, numero=numero_conta)
+    conta = ContaCorrente.nova_conta(cliente=cliente, numero=numero_conta,limite_saques,deposito)
     contas.append(conta)
     cliente.contas.append(conta)
+    conta.depositar.append(conta)
+    conta._limite_saques(conta)
+    
 
-    print("\n=== Conta criada com sucesso! ===")
+    print("\n+++ Conta criada com sucesso! +++")
 
 
 def listar_contas(contas):
@@ -337,6 +346,6 @@ def main():
 
         else:
             print("\n@@@ Operação inválida, por favor selecione novamente a operação desejada. @@@")
-
-
-main()
+        
+        
+main()        
