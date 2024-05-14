@@ -1,0 +1,6 @@
+[24-05-14 04:31:54]Função 'criar_cliente'executada com argumentos([<PessoaFisica:'o','0'>],) e {}.Retornou None
+[24-05-14 04:32:08]Função 'criar_conta'executada com argumentos(1, [<PessoaFisica:'o','0'>], [<ContaCorrente: ('2223', '1', 'o')>]) e {}.Retornou None
+[24-05-14 04:32:22]Função 'depositar'executada com argumentos([<PessoaFisica:'o','0'>],) e {}.Retornou None
+[24-05-14 04:32:33]Função 'exibir_extrato'executada com argumentos([<PessoaFisica:'o','0'>],) e {}.Retornou None
+[24-05-14 04:32:47]Função 'sacar'executada com argumentos([<PessoaFisica:'o','0'>],) e {}.Retornou None
+[24-05-14 04:33:00]Função 'exibir_extrato'executada com argumentos([<PessoaFisica:'o','0'>],) e {}.Retornou None

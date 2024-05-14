@@ -1,6 +1,9 @@
 import textwrap
 from abc import ABC, abstractclassmethod, abstractproperty
 from datetime import datetime
+from pathlib import Path
+
+ROOT_PATH = Path(__file__).parent
 
 
 class ContasIterador:
@@ -50,12 +53,15 @@ class PessoaFisica(Cliente):
         self.data_nascimento = data_nascimento
         self.cpf = cpf
 
+    def __repr__(self) -> str:
+        return (f"<{self.__class__.__name__}:'{self.nome}','{self.cpf}'>")
+
 
 class Conta:
     def __init__(self, numero, cliente):
         self._saldo = 0
         self._numero = numero
-        self._agencia = "0001"
+        self._agencia = "2223"
         self._cliente = cliente
         self._historico = Historico()
 
@@ -103,7 +109,7 @@ class Conta:
     def depositar(self, valor):
         if valor > 0:
             self._saldo += valor
-            print("\n=== Depósito realizado com sucesso! ===")
+            print("\n--- Depósito realizado com sucesso! ---")
         else:
             print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
             return False
@@ -112,7 +118,7 @@ class Conta:
 
 
 class ContaCorrente(Conta):
-    def __init__(self, numero, cliente, limite=500, limite_saques=3):
+    def __init__(self, numero, cliente, limite=800, limite_saques=5):
         super().__init__(numero, cliente)
         self._limite = limite
         self._limite_saques = limite_saques
@@ -143,6 +149,9 @@ class ContaCorrente(Conta):
             return super().sacar(valor)
 
         return False
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__}: ('{self.agencia}', '{self.numero}', '{self.cliente.nome}')>"
 
     def __str__(self):
         return f"""\
@@ -233,7 +242,12 @@ class Deposito(Transacao):
 def log_transacao(func):
     def envelope(*args, **kwargs):
         resultado = func(*args, **kwargs)
-        print(f"{datetime.now()}: {func.__name__.upper()}")
+        data_hora = datetime.utcnow().strftime("%y-%m-%d %H:%M:%S")
+        with open(ROOT_PATH / "log.txt", "a") as arquivo:
+            arquivo.write(
+                f"[{data_hora}]Função '{func.__name__}'executada com argumentos{args} e {kwargs}."
+                f"Retornou {resultado}\n"
+            )
         return resultado
 
     return envelope
