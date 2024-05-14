@@ -1,5 +1,7 @@
 # modelando-um-sistema-bancario-python-Poo
+# ESTE PROJETO É FEITO PARA FINS ESTUDANTIS, REALIZADO POR GUIHERME ARTHUR DE CARVALHO, NA PLATAFORMA DA DIO-ME.
 
+# NELE ESTOU DESENVOLVENDO DE ACORDO COM OS EXEMPLOS FEITOS EM AULAS DO BOOTCAMP
 # MODELANDO UM SISEMA BANCÁRIO UTILIZANDO POO
  POLIMORFISMO=  é um mecanismo por meio do qual selecionamos as funcionalidades utilizadas de forma dinâmica por um programa no decorrer de sua execução.
  
